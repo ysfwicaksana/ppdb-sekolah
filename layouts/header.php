@@ -1,6 +1,7 @@
 <?php
 
   if (isset($_POST['submit'])) {
+    
     $_SESSION = [];
     session_unset();
     session_destroy();
@@ -38,7 +39,7 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="administrative-requirements.php">Kelengkapan Administrasi</a>
+                <a class="nav-link active" aria-current="page" href="administration.php">Kelengkapan Administrasi</a>
             </li>
             </ul>
             <div class="d-flex">
