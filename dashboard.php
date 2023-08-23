@@ -16,17 +16,16 @@
       exit;
     } 
 
-    $result = show_data("SELECT u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, br.id, br.nama_berkas, br.file, r.status, j.nama_jurusan FROM berkas_registrasi br
-    LEFT JOIN registrasi r ON br.registrasi_id = r.id
-    LEFT JOIN jurusan j ON r.jurusan_id = j.id
-    LEFT JOIN user u ON r.user_id = u.id");
+    $result = show_data("SELECT u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
+    LEFT JOIN `user` u ON r.user_id = u.id");
 
+  // header 
     require './layouts/header.php';
   ?>
-    <div class="dashboard-contents">
+    <div class="dashboard-contents" style="margin-top: 70px;">
       <div class="container">
         <p>Data Seluruh Siswa</p>
-        <div class="table-container">
+        <div class="table-container" style="overflow: auto;">
           <table class="table">
             <thead>
               <tr>
@@ -57,22 +56,6 @@
                 </tr>
               <?php $i++ ?>
               <?php endforeach; ?>
-              <!-- <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Karawang</td>
-                <td>24 Januari 2005</td>
-                <td>Laki Laki</td>
-                <td><span>Diterima</span></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td>Karawang</td>
-                <td>24 Januari 2005</td>
-                <td>Perempuan</td>
-                <td><span>Diterima</span></td>
-              </tr> -->
             </tbody>
           </table>
         </div>

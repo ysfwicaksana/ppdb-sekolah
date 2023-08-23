@@ -25,64 +25,66 @@
   if ( isset($_POST['submit-data']) ) {
     if ( advancedAdministration($_POST, $user_id) > 0 ) {
       echo "
-      <script type='text/javascript'>
-        document.addEventListener('DOMContentLoaded', () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'success', 
-            html: '<p class="."p-popup".">Data berhasil disimpan!</p>',
-            showConfirmButton: false,
-            timer: 2000
+        <script type='text/javascript'>
+          document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'success', 
+              html: '<p class="."p-popup".">Data berhasil disimpan!</p>',
+              showConfirmButton: false,
+              timer: 2000
+            })
           })
-        })
-      </script>
-    ";
+        </script>
+      ";
+
+      header("Location: advanced-administration.php");
+
     }
+
   }
 
-  $files = show_data("SELECT u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, br.id, br.nama_berkas, br.file, r.status, j.nama_jurusan FROM berkas_registrasi br
+  $files = show_data("SELECT br.id, br.nama_berkas, br.file, r.status FROM berkas_registrasi br
   LEFT JOIN registrasi r ON br.registrasi_id = r.id
   LEFT JOIN jurusan j ON r.jurusan_id = j.id
   LEFT JOIN user u ON r.user_id = u.id WHERE u.id = '$user_id'");
 
   // header
   require './layouts/header.php';
-?>
-    
-    <div class="advanced-administration-contents">
-      <div class="container">
+?>  
+    <div class="advanced-administration-contents" style="margin-top: 70px;">
+      <div class="container d-flex flex-column mb-3">
         <?php if ( mysqli_fetch_assoc($result) ) : ?>
-          
-        <div class="table-container">
-          <p>Data Berkas Anda</p>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama Siswa</th>
-                <th scope="col">Nama Berkas</th>
-                <th scope="col">File Berkas</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $i = 1 ?>
-              <?php foreach ( $files as $file ) : ?>
+          <div class="table-container">
+            <p>Data Berkas Anda</p>
+            <table class="table">
+              <thead>
                 <tr>
-                  <td><?= $i ?></td>
-                  <td><?= $file['nama'] ?></td>
-                  <td><?= $file['nama_berkas'] ?></td>
-                  <td><?= $file['file'] ?></td>
+                  <th scope="col">No</th>
+                  <th scope="col">Nama Berkas</th>
+                  <th scope="col">File Berkas</th>
+                  <th scope="col">Aksi</th>
                 </tr>
-              <?php $i++ ?>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-        
+              </thead>
+              <tbody>
+                <?php $i = 1 ?>
+                <?php foreach ( $files as $file ) : ?>
+                  <tr>
+                    <td><?= $i ?></td>
+                    <td><?= $file['nama_berkas'] ?></td>
+
+                    <td><a href="<?= 'uploads/'.$file['file']; ?>" target="_blank" style="text-decoration: none;"><?= $file['file'] ?></a></td>
+                    <td><a href="#" onclick="confirmDelete(<?= $file['id'] ?>)" class="btn btn-danger" style="color: #fff !important;">Hapus</a></td>
+                  </tr>
+                <?php $i++ ?>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
         <?php endif; ?>
 
-        <div class="form-container">
-          <form action="" method="post" class="form" enctype="multipart/form-data">
+        <div class="form-container d-flex justify-content-center">
+          <form action="" method="post" class="d-flex flex-column mb-3 gap-2 advanced-administration-form" enctype="multipart/form-data">
             <input type="text" name="nama_berkas" class="form-control" placeholder="Nama Berkas" required>
             <input type="file" name="file" class="form-control" placeholder="File Berkas" required>
             <button type="submit" name="submit-data" class="btn btn-primary">Submit</button>
@@ -90,7 +92,6 @@
         </div>
       </div>
     </div>
-
 
 <!-- footer -->
 <?php 

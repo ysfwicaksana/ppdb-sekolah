@@ -1,8 +1,9 @@
 <?php
 
-    // connect to database
+    // koneksi ke database
     $conn = mysqli_connect("Localhost", "root", "", "ppdb_sekolah");
 
+    // fungsi untuk menampilkan data
     function show_data($query) {
         global $conn;
 
@@ -16,7 +17,8 @@
         return $rows;
     }
 
-    function register($data) {
+    //  fungsi untuk mendaftarkan akun
+    function registerAccount($data) {
         global $conn;
 
         $nama = $data['nama'];
@@ -66,7 +68,6 @@
 
         // enkripsi password
         $password = password_hash($password, PASSWORD_BCRYPT);
-
         $created_at = date('Y-m-d H:i:s', time());
         $updated_at = $created_at;
 
@@ -84,8 +85,57 @@
         return mysqli_affected_rows($conn);
     }
 
-    // function login() {}
+    // fungsi untuk login akun
+    function loginAccount($data) {
+        global $conn;
 
+        $email = $data['email'];
+        $password = $data['password'];
+
+        $result = mysqli_query($conn, "SELECT * from user WHERE email = '$email'");
+
+        // cek user ada atau tidak
+        if ( mysqli_num_rows($result) === 1 ) {
+            // cek password
+            $user = mysqli_fetch_assoc($result);
+
+            if ( password_verify($password, $user['password']) ) {
+                // cek role
+
+                if ( $user['role'] === 'user' ) {
+                    $_SESSION['login'] = true;
+
+                    // set cookie
+                    setcookie('xyz', $user['id'], time() + 3600);
+                    setcookie('zyx', hash('sha256', $user['email']), time() + 3600);
+
+                    header("Location: dashboard.php");
+                    exit;
+                }
+            }
+        }
+
+        $error = true;
+
+        if ( isset($error) ) {
+            echo "
+                <script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'error', 
+                            html: '<p class="."p-popup".">Email atau password salah!</p>',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    })
+                </script>
+            ";
+        }
+        
+    }
+
+    // fungsi untuk daftar administrasi
     function administration($data, $id) {
         global $conn;
 
@@ -116,6 +166,7 @@
         return mysqli_affected_rows($conn);
     }
 
+    // fungsi untuk upload berkas
     function uploadBerkas() {
         $file_name = $_FILES['file']['name'];
         $error = $_FILES['file']['error'];
@@ -172,6 +223,7 @@
         return $new_file_name;
     }
 
+    // fungsi untuk administrasi lanjutan
     function advancedAdministration($data, $user_id) {
         global $conn;
         $registrasi_table = mysqli_query($conn, "SELECT * FROM registrasi WHERE user_id = '$user_id'");
@@ -194,6 +246,25 @@
             '$created_at',
             '$updated_at'
         )");
+
+        return mysqli_affected_rows($conn);
+    }
+
+    // fungsi untuk hapus berkas
+    function deleteFile($id) {
+        global $conn;
+
+        // query untuk mendapatkan file berdasarkan id
+        $result = mysqli_query($conn, "SELECT br.file FROM berkas_registrasi br WHERE id = $id");
+
+        // di ubah menjadi array assosiative
+        $filename =  mysqli_fetch_assoc($result);
+        
+        // fungsi untuk menghapus file pada directori server 
+        unlink('uploads/'.$filename['file']);
+
+        // query untuk mengapus file berdasarkan id
+        mysqli_query($conn, "DELETE br FROM berkas_registrasi br LEFT JOIN registrasi r ON br.registrasi_id = r.id WHERE br.id = $id");
 
         return mysqli_affected_rows($conn);
     }

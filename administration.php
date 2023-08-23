@@ -36,9 +36,9 @@
     include './layouts/header.php';
   ?>
 
-    <div class="registration-completeness-contents">
-      <div class="container">
-        <form action="" method="post" class="register-form">
+    <div class="administration-contents" style="margin-top: 70px;">
+      <div class="container d-flex justify-content-center">
+        <form action="" method="post" class="d-flex flex-column mb-3 gap-2 administration-form">
           <select class="form-select" aria-label="Default select example" name="jurusan_id">
             <option selected>Pilih Jurusan</option>
             <?php foreach($jurusan as $j) : ?>

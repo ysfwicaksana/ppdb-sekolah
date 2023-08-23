@@ -26,41 +26,14 @@
     }
 
     if ( isset($_POST['submit']) ) {
-      $email = $_POST['email'];
-      $password = $_POST['password'];
 
-      $result = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
-
-      // cek username ada atau tidak
-      if ( mysqli_num_rows($result) === 1 ) {
-        // cek password
-        $user = mysqli_fetch_assoc($result);
-
-        if ( password_verify($password, $user['password']) ) {
-          
-          // cek role
-          if ( $user['role'] === 'user' ) {
-            $_SESSION['login'] = true;
-
-            // cookie
-            setcookie('xyz', $user['id'], time() + 3600);
-            setcookie('zyx', hash('sha256', $user['email']), time() + 3600);
-
-            header("Location: dashboard.php");
-            exit;
-          }
-        }
-      }
-
-      $error = true;
-
-      if ( isset($error) ) {
+      if ( loginAccount($_POST) ) {
         echo "
               <script type='text/javascript'>
                 document.addEventListener('DOMContentLoaded', () => {
                   Swal.fire({
-                    icon: 'error',
-                    title: 'error', 
+                    icon: 'success',
+                    title: 'Berhasil', 
                     html: '<p class="."p-popup".">Email atau password salah!</p>',
                     showConfirmButton: false,
                     timer: 2000
@@ -71,15 +44,16 @@
       }
     }
 
+    // header
     include './layouts/header-landing-page.php';
   ?>
-    <div class="login-contents">
-      <div class="container">
-        <form action="" method="post" class="login-form">
+    <div class="login-contents" style="margin-top: 70px;">
+      <div class="container d-flex justify-content-center">
+        <form action="" method="post" class="d-flex flex-column mb-3 gap-2 login-form">
             <input type="text" class="form-control" placeholder="Email" name="email">
             <input type="password" class="form-control" placeholder="Password" name="password">
             <button type="submit" name="submit" class="btn btn-primary">Masuk</button>
-            <p>Sudah mempunyai akun? <a href="register.php">Daftar</a></p>
+            <p>Sudah mempunyai akun? <a href="register.php" style="text-decoration: none;">Daftar</a></p>
         </form>
       </div>
     </div>
