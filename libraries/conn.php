@@ -269,4 +269,13 @@
         return mysqli_affected_rows($conn);
     }
 
+    function search($keyword) {
+        global $conn;
+
+        $query = "SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
+        LEFT JOIN `user` u ON r.user_id = u.id WHERE
+        u.nama LIKE '%$keyword%'";
+
+        return show_data($query);
+    }
 ?>

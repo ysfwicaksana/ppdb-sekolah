@@ -16,15 +16,27 @@
       exit;
     } 
 
-    $result = show_data("SELECT u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
-    LEFT JOIN `user` u ON r.user_id = u.id");
+    $result = show_data("SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
+    LEFT JOIN `user` u ON r.user_id = u.id ORDER BY r.id DESC");
 
-  // header 
+    // fitur pencarian
+    if ( isset($_POST['submit-keywords']) ) {
+      $result = search($_POST['keyword']);
+    }
+
+    // header 
     require './layouts/header.php';
   ?>
     <div class="dashboard-contents" style="margin-top: 70px;">
-      <div class="container">
+      <div class="container d-flex flex-column mb-3">
+
+        <form action="" method="post" class="d-flex flex-row mb-3 gap-2" style="width: 100%;">
+          <input type="text" class="form-control" name="keyword" placeholder="Masukkan nama...">
+          <button type="submit" name="submit-keywords" class="btn btn-primary">search</button>
+        </form>
+
         <p>Data Seluruh Siswa</p>
+
         <div class="table-container" style="overflow: auto;">
           <table class="table">
             <thead>
