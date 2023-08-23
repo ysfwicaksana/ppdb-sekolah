@@ -28,7 +28,7 @@
     }
 
     if( isset($_POST['submit-data']) ) {
-      if ( kelengkapanAdministrasi($_POST, $id) > 0  ) {
+      if ( administration($_POST, $id) > 0  ) {
         header("Location: advanced-administration.php");
       }
     }

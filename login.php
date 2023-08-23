@@ -44,7 +44,7 @@
 
             // cookie
             setcookie('xyz', $user['id'], time() + 3600);
-            setcookie('zyx', hash('sha256', $user['email']));
+            setcookie('zyx', hash('sha256', $user['email']), time() + 3600);
 
             header("Location: dashboard.php");
             exit;

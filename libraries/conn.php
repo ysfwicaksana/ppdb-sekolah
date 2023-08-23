@@ -71,7 +71,7 @@
         $updated_at = $created_at;
 
         // tambah user baru ke database
-        $query = "INSERT INTO user VALUES(
+        mysqli_query($conn, "INSERT INTO user VALUES(
             '',
             '$email',
             '$nama',
@@ -79,14 +79,14 @@
             'user',
             '$created_at',
             '$updated_at'
-        )";
-
-        mysqli_query($conn, $query);
+        )");
 
         return mysqli_affected_rows($conn);
     }
 
-    function kelengkapanAdministrasi($data, $id) {
+    // function login() {}
+
+    function administration($data, $id) {
         global $conn;
 
         $jurusan_id = $data['jurusan_id'];
@@ -101,7 +101,7 @@
         $user = mysqli_fetch_assoc($result);
         $user_id = $user['id'];
 
-        $query = "INSERT INTO registrasi VALUE(
+        mysqli_query($conn, "INSERT INTO registrasi VALUE(
             '',
             '$user_id',
             '$jurusan_id',
@@ -112,15 +112,12 @@
             'pending',
             '$created_at',
             '$updated_at'
-        )";
-
-        mysqli_query($conn, $query);
+        )");
         return mysqli_affected_rows($conn);
     }
 
     function uploadBerkas() {
         $file_name = $_FILES['file']['name'];
-        $file_size = $_FILES['file']['size'];
         $error = $_FILES['file']['error'];
         $tmp_name = $_FILES['file']['tmp_name'];
 
@@ -143,12 +140,12 @@
             return false;
         }
 
-        // cek apakah yang diupload adalah gambar
+        // cek apakah yang diupload adalah dokumen
         $valid_image_extension = ['pdf'];
         $image_extension = explode('.', $file_name);
         $image_extension = strtolower(end($image_extension));
 
-        if (!in_array($valid_image_extension, $valid_image_extension)) {
+        if (!in_array($image_extension, $valid_image_extension)) {
             echo "
                     <script type='text/javascript'>
                         document.addEventListener('DOMContentLoaded', () => {
@@ -175,6 +172,30 @@
         return $new_file_name;
     }
 
+    function advancedAdministration($data, $user_id) {
+        global $conn;
+        $registrasi_table = mysqli_query($conn, "SELECT * FROM registrasi WHERE user_id = '$user_id'");
+        $registrasi = mysqli_fetch_assoc($registrasi_table);
+        $registrasi_id = $registrasi['id'];
+        $nama_berkas = htmlspecialchars($data['nama_berkas']);
+        $file = uploadBerkas();
+        $created_at = date('Y-m-d H:i:s', time());
+        $updated_at = $created_at;
 
+        if ( !$file ) {
+            return false;
+        }
+
+        mysqli_query($conn, "INSERT INTO berkas_registrasi VALUES(
+            '',
+            '$registrasi_id',
+            '$nama_berkas',
+            '$file',
+            '$created_at',
+            '$updated_at'
+        )");
+
+        return mysqli_affected_rows($conn);
+    }
 
 ?>
