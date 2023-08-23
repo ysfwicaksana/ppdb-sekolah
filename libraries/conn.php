@@ -274,7 +274,7 @@
 
         $query = "SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
         LEFT JOIN `user` u ON r.user_id = u.id WHERE
-        u.nama LIKE '%$keyword%'";
+        u.nama LIKE '%$keyword%' ORDER BY r.id DESC";
 
         return show_data($query);
     }
