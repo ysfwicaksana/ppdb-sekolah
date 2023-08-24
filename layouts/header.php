@@ -1,3 +1,20 @@
+<?php
+
+  if (isset($_POST['submit'])) {
+    
+    $_SESSION = [];
+    session_unset();
+    session_destroy();
+  
+    setcookie('xyz', '', time() - 3600);
+    setcookie('zyx', '', time() - 3600);
+  
+    header("Location: login.php");
+    exit;
+  }
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,8 +24,13 @@
     
     <!-- bootstrap 5.0.2 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    
+    <!-- font family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- link css -->
     <link rel="stylesheet" href="main.css">
   </head>
   <body>
@@ -22,11 +44,13 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="administrative-requirements.php">Kelengkapan Administrasi</a>
+                <a class="nav-link active" aria-current="page" href="administration.php">Kelengkapan Administrasi</a>
             </li>
             </ul>
             <div class="d-flex">
-            <a href="/logout.php" class="btn btn-danger btn-logout">Keluar</a>
+              <form action="" method="post">
+                <button type="submit" name="submit" class="btn btn-danger btn-logout">Keluar</a>
+              </form>
             </div>
         </div>
       </div>

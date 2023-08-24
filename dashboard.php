@@ -1,6 +1,7 @@
 <!-- header -->
   <?php 
     session_start();
+
     require './libraries/conn.php';
 
     if ( !isset($_COOKIE['xyz']) && !isset($_COOKIE['zyx']) ) {
@@ -15,57 +16,65 @@
       exit;
     } 
 
-    include './layouts/header.php';
+    $result = show_data("SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
+    LEFT JOIN `user` u ON r.user_id = u.id ORDER BY r.id DESC");
+
+    // fitur pencarian
+    if ( isset($_POST['submit-keywords']) ) {
+      $result = search($_POST['keyword']);
+    }
+
+    // header 
+    require './layouts/header.php';
   ?>
-      <div class="dashboard-contents">
-        <div class="container">
-          <p>Data Seluruh Siswa</p>
-          <div class="table-container">
-            <table class="table">
-              <thead>
+    <div class="dashboard-contents" style="margin-top: 70px;">
+      <div class="container d-flex flex-column mb-3">
+
+        <form action="" method="post" class="d-flex flex-row mb-3 gap-2" style="width: 100%;">
+          <input type="text" class="form-control" name="keyword" placeholder="Masukkan nama...">
+          <button type="submit" name="submit-keywords" class="btn btn-primary">search</button>
+        </form>
+
+        <p>Data Seluruh Siswa</p>
+
+        <div class="table-container" style="overflow: auto;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Siswa</th>
+                <th scope="col">Tempat Lahir</th>
+                <th scope="col">Tanggal Lahir</th>
+                <th scope="col">Jenis Kelamin</th>
+                <th scope="col">Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $i = 1; ?>
+              <?php foreach ( $result as $r ) : ?>
                 <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Nama Siswa</th>
-                  <th scope="col">Tempat Lahir</th>
-                  <th scope="col">Tanggal Lahir</th>
-                  <th scope="col">Jenis Kelamin</th>
-                  <th scope="col">Keterangan</th>
+                  <th scope="row"><?= $i ?></th>
+                  <td><?= $r['nama'] ?></td>
+                  <td><?= $r['tempat_lahir'] ?></td>
+                  <td><?= $r['tanggal_lahir'] ?></td>
+                  <td><?= $r['jenis_kelamin'] ?></td>
+                  <?php if ( $r['status'] === 'pending' ) : ?>
+                    <td><span class="pending"><?= $r['status'] ?></span></td>
+                  <?php elseif ( $r['status'] === 'accept' ) : ?>
+                    <td><span class="accept"><?= $r['status'] ?></span></td>
+                  <?php else : ?>
+                    <td><span class="reject"><?= $r['status'] ?></span></td>
+                  <?php endif; ?>
                 </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Karawang</td>
-                  <td>24 Januari 2005</td>
-                  <td>Laki Laki</td>
-                  <td><span>Diterima</span></td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Karawang</td>
-                  <td>24 Januari 2005</td>
-                  <td>Laki Laki</td>
-                  <td><span>Diterima</span></td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry the Bird</td>
-                  <td>Karawang</td>
-                  <td>24 Januari 2005</td>
-                  <td>Perempuan</td>
-                  <td><span>Diterima</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+              <?php $i++ ?>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
         </div>
       </div>
-    </body>
+    </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="main.js"></script>
-  </body>
-</html>
+<!-- footer -->
+<?php
+  require './layouts/footer.php';
+?>
