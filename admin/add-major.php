@@ -28,7 +28,7 @@
         <div class="container d-flex flex-column mb-3 gap-2">
             <p>Tambah Jurusan</p>
 
-            <form action="" method="post" class="d-flex flex-column mb-3 gap-2" style="width: 370px;">
+            <form action="" method="post" class="d-flex flex-column mb-3 gap-2 form" style="width: 370px; max-width: 100%">
                 <input type="text" name="nama_jurusan" class="form-control" required>
                 <button type="submit" name="submit-data" class="btn btn-primary">Tambah Jurusan</button>
             </form>

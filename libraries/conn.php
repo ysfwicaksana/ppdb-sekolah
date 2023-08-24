@@ -317,6 +317,17 @@
         )");
 
         return mysqli_affected_rows($conn);
+    }
 
+    function updateMajor($data) {
+        global $conn;
+
+        $id = $data['id'];
+        $nama_jurusan = $data['nama_jurusan'];
+        $updated_at = date('Y-m-d H:i:s', time());
+
+        mysqli_query($conn, "UPDATE jurusan SET nama_jurusan = '$nama_jurusan', updated_at = '$updated_at' WHERE id = '$id'");
+
+        mysqli_affected_rows($conn);
     }
 ?>

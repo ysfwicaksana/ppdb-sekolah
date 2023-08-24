@@ -1,20 +1,3 @@
-<?php
-
-  if (isset($_POST['submit'])) {
-    
-    $_SESSION = [];
-    session_unset();
-    session_destroy();
-  
-    setcookie('xyz', '', time() - 3600);
-    setcookie('zyx', '', time() - 3600);
-  
-    header("Location: login.php");
-    exit;
-  }
-
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -48,9 +31,7 @@
             </li>
             </ul>
             <div class="d-flex">
-              <form action="" method="post">
-                <button type="submit" name="submit" class="btn btn-danger btn-logout">Keluar</a>
-              </form>
+              <a href="logout.php" class="btn btn-danger btn-logout">Keluar</a>
             </div>
         </div>
       </div>
