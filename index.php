@@ -11,7 +11,7 @@
     LEFT JOIN `user` u ON r.user_id = u.id ORDER BY r.id DESC");
     
     // fitur pencarian
-    if ( isset($_POST['submit-keywords']) ) {
+    if ( isset($_POST['submit-keyword']) ) {
       $data = search($_POST['keyword']);
     }
 
@@ -22,7 +22,7 @@
       <div class="container d-flex flex-column mb-3">
         <form action="" method="post" class="d-flex flex-row mb-3 gap-2" style="width: 100%;">
           <input type="text" class="form-control" name="keyword" placeholder="Masukkan nama...">
-          <button type="submit" name="submit-keywords" class="btn btn-primary">search</button>
+          <button type="submit" name="submit-keyword" class="btn btn-primary">search</button>
         </form>
         <p>Data Seluruh Siswa</p>
         <div class="table-container" style="overflow: auto;">

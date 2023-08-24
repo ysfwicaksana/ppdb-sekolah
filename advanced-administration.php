@@ -55,7 +55,7 @@
     <div class="advanced-administration-contents" style="margin-top: 70px;">
       <div class="container d-flex flex-column mb-3">
         <?php if ( mysqli_fetch_assoc($result) ) : ?>
-          <div class="table-container">
+          <div class="table-container" style="overflow: auto;">
             <p>Data Berkas Anda</p>
             <table class="table">
               <thead>

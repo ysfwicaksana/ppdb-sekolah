@@ -6,7 +6,7 @@
     // fungsi untuk menampilkan data
     function show_data($query) {
         global $conn;
-
+        
         $result = mysqli_query($conn, $query);
 
         $rows = [];
@@ -72,7 +72,7 @@
         $updated_at = $created_at;
 
         // tambah user baru ke database
-        mysqli_query($conn, "INSERT INTO user VALUES(
+        mysqli_query($conn, "INSERT INTO user (id, email, nama, password, role, created_at, updated_at) VALUES(
             '',
             '$email',
             '$nama',
@@ -96,12 +96,13 @@
 
         // cek user ada atau tidak
         if ( mysqli_num_rows($result) === 1 ) {
+
             // cek password
             $user = mysqli_fetch_assoc($result);
 
             if ( password_verify($password, $user['password']) ) {
-                // cek role
 
+                // cek role
                 if ( $user['role'] === 'user' ) {
                     $_SESSION['login'] = true;
 
@@ -111,7 +112,7 @@
 
                     header("Location: dashboard.php");
                     exit;
-                }
+                } 
             }
         }
 
@@ -151,7 +152,7 @@
         $user = mysqli_fetch_assoc($result);
         $user_id = $user['id'];
 
-        mysqli_query($conn, "INSERT INTO registrasi VALUE(
+        mysqli_query($conn, "INSERT INTO registrasi (id, user_id, jurusan_id, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, status, created_at, updated_at) VALUES(
             '',
             '$user_id',
             '$jurusan_id',
@@ -238,7 +239,7 @@
             return false;
         }
 
-        mysqli_query($conn, "INSERT INTO berkas_registrasi VALUES(
+        mysqli_query($conn, "INSERT INTO berkas_registrasi (id, registrasi_id, nama_berkas, file, created_at, updated_at) VALUES(
             '',
             '$registrasi_id',
             '$nama_berkas',
@@ -270,12 +271,52 @@
     }
 
     function search($keyword) {
-        global $conn;
-
         $query = "SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
         LEFT JOIN `user` u ON r.user_id = u.id WHERE
         u.nama LIKE '%$keyword%' ORDER BY r.id DESC";
 
         return show_data($query);
+    }
+
+    function accountSearch($keyword) {
+        $query = "SELECT * FROM user WHERE
+        role = 'user' AND
+        (nama LIKE '%$keyword%' OR email LIKE '%$keyword%') ORDER BY id DESC";
+
+        return show_data($query);
+    }
+
+    function accept($id) {
+        global $conn;
+
+        mysqli_query($conn, "UPDATE registrasi SET status = 'accept' WHERE id = $id");
+
+        return mysqli_affected_rows($conn);
+    }
+
+    function reject($id) {
+        global $conn;
+
+        mysqli_query($conn, "UPDATE registrasi SET status = 'reject' WHERE id = $id");
+
+        return mysqli_affected_rows($conn);
+    }
+
+    function addMajor($data) {
+        global $conn;
+
+        $nama_jurusan = htmlspecialchars($data['nama_jurusan']);
+        $created_at = date('Y-m-d H:i:s', time());
+        $updated_at = $created_at;
+
+        mysqli_query($conn, "INSERT INTO jurusan (id, nama_jurusan, created_at, updated_at) VALUES(
+            '',
+            '$nama_jurusan',
+            '$created_at',
+            '$updated_at'
+        )");
+
+        return mysqli_affected_rows($conn);
+
     }
 ?>

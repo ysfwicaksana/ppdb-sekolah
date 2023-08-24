@@ -15,11 +15,15 @@ a,th,td {
 }
 
 tr > td:not(:first-child) {
-    min-width: 200px;
+    min-width: 120px;
 }
 
 tr > td:first-child {
     min-width: 70px;
+}
+
+tr > td:nth-child(5) {
+    min-width: 50px;
 }
 
 .register-form,
@@ -44,9 +48,11 @@ td > span.pending {
 }
 
 td > span.reject {
-    background-color: rgb(255, 0, 13);
+    background-color: rgb(255, 0, 13) ;
+    color: #fff !important;
 }
 
 td > span.accept {
-    background-color: rgb(6, 188, 30);
+    background-color: rgb(6, 188, 30) ;
+    color: #fff !important;
 }

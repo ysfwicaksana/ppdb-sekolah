@@ -33,7 +33,7 @@
       }
     }
     
-    include './layouts/header.php';
+    require './layouts/header.php';
   ?>
 
     <div class="administration-contents" style="margin-top: 70px;">

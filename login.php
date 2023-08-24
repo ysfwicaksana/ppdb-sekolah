@@ -23,7 +23,7 @@
     if ( isset($_SESSION['login']) ) {
       header("Location: dashboard.php");
       exit;
-    }
+    } 
 
     if ( isset($_POST['submit']) ) {
 
