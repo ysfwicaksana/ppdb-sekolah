@@ -39,9 +39,7 @@
       ";
 
       header("Location: advanced-administration.php");
-
     }
-
   }
 
   $files = show_data("SELECT br.id, br.nama_berkas, br.file, r.status FROM berkas_registrasi br
@@ -52,48 +50,48 @@
   // header
   require './layouts/header.php';
 ?>  
-    <div class="advanced-administration-contents" style="margin-top: 70px;">
-      <div class="container d-flex flex-column mb-3">
-        <?php if ( mysqli_fetch_assoc($result) ) : ?>
-          <div class="table-container" style="overflow: auto;">
-            <p>Data Berkas Anda</p>
-            <table class="table">
-              <thead>
+  <div class="advanced-administration-contents" style="margin-top: 70px;">
+    <div class="container d-flex flex-column mb-3">
+      <?php if ( mysqli_fetch_assoc($result) ) : ?>
+        <div class="table-container" style="overflow: auto;">
+          <p>Data Berkas Anda</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Berkas</th>
+                <th scope="col">File Berkas</th>
+                <th scope="col">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $i = 1 ?>
+              <?php foreach ( $files as $file ) : ?>
                 <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Nama Berkas</th>
-                  <th scope="col">File Berkas</th>
-                  <th scope="col">Aksi</th>
+                  <td><?= $i ?></td>
+                  <td><?= $file['nama_berkas'] ?></td>
+
+                  <td><a href="<?= 'uploads/'.$file['file']; ?>" target="_blank" style="text-decoration: none;"><?= $file['file'] ?></a></td>
+                  <td><a href="#" onclick="confirmDelete(<?= $file['id'] ?>)" class="btn btn-danger" style="color: #fff !important;">Hapus</a></td>
                 </tr>
-              </thead>
-              <tbody>
-                <?php $i = 1 ?>
-                <?php foreach ( $files as $file ) : ?>
-                  <tr>
-                    <td><?= $i ?></td>
-                    <td><?= $file['nama_berkas'] ?></td>
-
-                    <td><a href="<?= 'uploads/'.$file['file']; ?>" target="_blank" style="text-decoration: none;"><?= $file['file'] ?></a></td>
-                    <td><a href="#" onclick="confirmDelete(<?= $file['id'] ?>)" class="btn btn-danger" style="color: #fff !important;">Hapus</a></td>
-                  </tr>
-                <?php $i++ ?>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
-        <?php endif; ?>
-
-        <div class="form-container d-flex justify-content-center">
-          <form action="" method="post" class="d-flex flex-column mb-3 gap-2 advanced-administration-form" enctype="multipart/form-data">
-            <input type="text" name="nama_berkas" class="form-control" placeholder="Nama Berkas" required>
-            <input type="file" name="file" class="form-control" placeholder="File Berkas" required>
-            <button type="submit" name="submit-data" class="btn btn-primary">Submit</button>
-          </form>
+              <?php $i++ ?>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
         </div>
+      <?php endif; ?>
+
+      <div class="form-container d-flex justify-content-center">
+        <form action="" method="post" class="d-flex flex-column mb-3 gap-2 advanced-administration-form" enctype="multipart/form-data">
+          <input type="text" name="nama_berkas" class="form-control" placeholder="Nama Berkas" required>
+          <input type="file" name="file" class="form-control" placeholder="File Berkas" required>
+          <button type="submit" name="submit-data" class="btn btn-primary">Submit</button>
+        </form>
       </div>
     </div>
+  </div>
 
-<!-- footer -->
-<?php 
+<?php
+  // footer
   require './layouts/footer.php';
 ?>

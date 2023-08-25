@@ -1,5 +1,4 @@
 <?php 
-
   session_start();
   require './libraries/conn.php';
 
@@ -47,22 +46,21 @@
 
   // header
   include './layouts/header-landing-page.php';
-
 ?>
-    <div class="register-contents" style="margin-top: 70px;">
-      <div class="container d-flex justify-content-center">
-        <form action="" method="post" class="d-flex flex-column mb-3 gap-2 register-form">
-          <input type="text" class="form-control" placeholder="Nama" name="nama">
-          <input type="text" class="form-control" placeholder="Email" name="email">
-          <input type="password" class="form-control" placeholder="Password" name="password">
-          <input type="password" class="form-control" placeholder="Konfirmasi Password" name="konfirmasi-password">
-          <button type="submit" name="submit" class="btn btn-primary">Daftar</button>
-          <p>Sudah mempunyai akun? <a href="login.php" style="text-decoration: none;">Masuk</a></p>
-        </form>
-      </div>    
-    </div>
+  <div class="register-contents" style="margin-top: 70px;">
+    <div class="container d-flex justify-content-center">
+      <form action="" method="post" class="d-flex flex-column mb-3 gap-2 register-form">
+        <input type="text" class="form-control" placeholder="Nama" name="nama">
+        <input type="text" class="form-control" placeholder="Email" name="email">
+        <input type="password" class="form-control" placeholder="Password" name="password">
+        <input type="password" class="form-control" placeholder="Konfirmasi Password" name="konfirmasi-password">
+        <button type="submit" name="submit" class="btn btn-primary">Daftar</button>
+        <p>Sudah mempunyai akun? <a href="login.php" style="text-decoration: none;">Masuk</a></p>
+      </form>
+    </div>    
+  </div>
     
-<!-- footer -->
 <?php
+  // footer
   require './layouts/footer.php';
 ?>

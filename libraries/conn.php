@@ -1,5 +1,4 @@
 <?php
-
     // koneksi ke database
     $conn = mysqli_connect("Localhost", "root", "", "ppdb_sekolah");
 
@@ -329,5 +328,14 @@
         mysqli_query($conn, "UPDATE jurusan SET nama_jurusan = '$nama_jurusan', updated_at = '$updated_at' WHERE id = '$id'");
 
         mysqli_affected_rows($conn);
+    }
+
+    function deleteMajor($id) {
+        global $conn;
+
+        // query untuk menghapus jurusan berdasarkan id
+        mysqli_query($conn, "DELETE from jurusan WHERE id = $id");
+
+        return mysqli_affected_rows($conn);
     }
 ?>

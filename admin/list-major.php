@@ -5,7 +5,6 @@
 
     // header
     require '../layouts/header-admin.php';
-
 ?>
 
     <div class="list-major-contents" style="margin-top: 70px;">
@@ -29,7 +28,7 @@
                                 <td><?= $l['nama_jurusan'] ?></td>
                                 <td><di class="d-flex flex-row mb-3 gap-2">
                                     <a href="update-major.php?id=<?= $l['id'] ?>" class="btn btn-warning">Ubah</a>
-                                    <a href="../libraries/delete-major.php?id=<?= $l['id'] ?>" class="btn btn-danger">Hapus</a>
+                                    <a href="#" onclick="confirmDeleteMajor(<?= $l['id'] ?>)" class="btn btn-danger">Hapus</a>
                                 </di></td>
                             </tr>
                         <?php $i++ ?>
@@ -41,8 +40,6 @@
     </div>
 
 <?php
-
     // footer
     require '../layouts/footer.php';
-
 ?>

@@ -1,6 +1,5 @@
 <?php
-
-    require 'conn.php';
+    require '../libraries/conn.php';
 
     $id = $_GET['id'];
 
@@ -20,8 +19,6 @@
             </script>
         ";
 
-        header("Location: ../admin/dashboard.php");
+        header("Location: ../admin/index.php");
     }
-
-
 ?>

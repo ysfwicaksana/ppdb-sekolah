@@ -1,5 +1,4 @@
 <?php
-
     require '../libraries/conn.php';
 
     // header
@@ -12,7 +11,6 @@
 
     $files = show_data("SELECT r.id, br.nama_berkas, br.file FROM berkas_registrasi br
     LEFT JOIN registrasi r ON br.registrasi_id = r.id WHERE r.id = '$id'");
-
 ?>
 
     <div class="verification-contents" style="margin-top: 70px;">
@@ -42,15 +40,13 @@
             </div>
 
             <div class="d-flex flex-row mb-3 gap-2">
-                <a href="../libraries/accept.php?id=<?= $id; ?>" class="btn btn-secondary">Terima</a>
-                <a href="../libraries/reject.php?id=<?= $id; ?>" class="btn btn-danger">Tolak</a>
+                <a href="accept.php?id=<?= $id; ?>" class="btn btn-secondary">Terima</a>
+                <a href="reject.php?id=<?= $id; ?>" class="btn btn-danger">Tolak</a>
             </div>
         </div>
     </div>
 
 <?php
-
     // footer
     require '../layouts/footer.php';
-
 ?>
