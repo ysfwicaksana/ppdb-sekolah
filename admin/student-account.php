@@ -1,6 +1,8 @@
 <?php
   require '../libraries/conn.php';
 
+  session_start();
+
   $students = show_data("SELECT * FROM user WHERE role = 'user' ORDER BY id DESC");
 
   if ( isset($_POST['submit-keyword']) ) {

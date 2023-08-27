@@ -3,13 +3,10 @@
 
   require './libraries/conn.php';
 
-  if ( !isset($_COOKIE['xyz']) && !isset($_COOKIE['zyx']) ) {
+  if ( !isset($_SESSION['id']) && !isset($_SESSION['email']) ) {
     $_SESSION = [];
     session_unset();
     session_destroy();
-
-    setcookie('xyz', '', time() - 3600);
-    setcookie('zyx', '', time() - 3600);
 
     header("Location: login.php");
     exit;
@@ -18,7 +15,7 @@
   $jurusan = show_data("SELECT * FROM jurusan");
 
   // cek apakah user sudah melakukan registrasi atau belum
-  $id = $_COOKIE['xyz'];
+  $id = $_SESSION['id'];
   $result = mysqli_query($conn, "SELECT * FROM registrasi WHERE user_id = $id");
 
   if (mysqli_fetch_assoc($result)) {
@@ -39,20 +36,20 @@
   <div class="administration-contents" style="margin-top: 70px;">
     <div class="container d-flex justify-content-center">
       <form action="" method="post" class="d-flex flex-column mb-3 gap-2 administration-form">
-        <select class="form-select" aria-label="Default select example" name="jurusan_id">
+        <select class="form-select" aria-label="Default select example" name="jurusan_id" required>
           <option selected>Pilih Jurusan</option>
           <?php foreach($jurusan as $j) : ?>
             <option value="<?= $j['id'] ?>"><?= $j['nama_jurusan'] ?></option>
           <?php endforeach; ?>
         </select>
-        <select class="form-select" aria-label="Default select example" name="jenis_kelamin">
+        <select class="form-select" aria-label="Default select example" name="jenis_kelamin" required>
           <option selected>Pilih Jenis Kelamin</option>
           <option value="L">Laki - laki</option>
           <option value="P">Perempuan</option>
         </select>
-        <input type="text" class="form-control" placeholder="Tempat Lahir" name="tempat_lahir">
-        <input type="date" class="form-control" placeholder="Tanggal Lahir" name="tanggal_lahir">
-        <input type="text" class="form-control" placeholder="Alamat" name="alamat">
+        <input type="text" class="form-control" placeholder="Tempat Lahir" name="tempat_lahir" required>
+        <input type="date" class="form-control" placeholder="Tanggal Lahir" name="tanggal_lahir" required>
+        <input type="text" class="form-control" placeholder="Alamat" name="alamat" required>
         <button type="submit" name="submit-data" class="btn btn-primary">Submit</button>
       </form>
     </div>

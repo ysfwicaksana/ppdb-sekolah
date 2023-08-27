@@ -1,6 +1,8 @@
 <?php
   require '../libraries/conn.php';
 
+  session_start();
+
   if ( isset($_POST['submit-data']) ) {
       if ( addMajor($_POST) > 0 ) {
           echo "

@@ -1,6 +1,8 @@
 <?php
   require '../libraries/conn.php';
 
+  session_start();
+
   $id = $_GET['id'];
 
   $jurusan = show_data("SELECT * FROM jurusan WHERE id = '$id'")[0];

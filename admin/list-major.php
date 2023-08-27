@@ -1,6 +1,8 @@
 <?php
     require '../libraries/conn.php';
 
+    session_start();
+
     $list_major = show_data("SELECT * FROM jurusan");
 
     // header
@@ -14,11 +16,11 @@
             <div class="table-container" style="overflow: auto;">
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Nama Jurusan</th>
-                        <th scope="col">Aksi</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama Jurusan</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1 ?>

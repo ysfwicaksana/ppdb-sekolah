@@ -70,7 +70,7 @@
         $created_at = date('Y-m-d H:i:s', time());
         $updated_at = $created_at;
 
-        // tambah user baru ke database
+        // query untuk menambahkan user baru ke database
         mysqli_query($conn, "INSERT INTO user (id, email, nama, password, role, created_at, updated_at) VALUES(
             '',
             '$email',
@@ -103,15 +103,24 @@
 
                 // cek role
                 if ( $user['role'] === 'user' ) {
-                    $_SESSION['login'] = true;
-
-                    // set cookie
-                    setcookie('xyz', $user['id'], time() + 3600);
-                    setcookie('zyx', hash('sha256', $user['email']), time() + 3600);
+                    
+                    // set session
+                    $_SESSION['id'] = $user['id'];
+                    $_SESSION['email'] = $user['email'];
+                    $_SESSION['login'] = $user['role'];
 
                     header("Location: dashboard.php");
                     exit;
-                } 
+                } else if ( $user['role'] === 'admin' ) {
+                    
+                    // set session
+                    $_SESSION['id'] = $user['id'];
+                    $_SESSION['email'] = $user['email'];
+                    $_SESSION['login'] = $user['role'];
+
+                    header("Location: index.php");
+                    exit;
+                }
             }
         }
 
@@ -191,7 +200,7 @@
             return false;
         }
 
-        // cek apakah yang diupload adalah dokumen
+        // cek apakah yang diupload adalah dokumen pdf
         $valid_image_extension = ['pdf'];
         $image_extension = explode('.', $file_name);
         $image_extension = strtolower(end($image_extension));
@@ -337,5 +346,6 @@
         mysqli_query($conn, "DELETE from jurusan WHERE id = $id");
 
         return mysqli_affected_rows($conn);
+
     }
 ?>

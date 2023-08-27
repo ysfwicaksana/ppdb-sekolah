@@ -1,9 +1,13 @@
 <?php
   session_start();
+  
   require './libraries/conn.php';
 
   if ( isset($_SESSION['login']) ) {
-    header("Location: dashboard.php");
+    if ( $_SESSION['login'] === 'user' ) {
+      header("Location: dashboard.php");
+      exit;
+    }
   }
 
   $data = show_data("SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
