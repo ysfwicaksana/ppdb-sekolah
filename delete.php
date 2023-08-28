@@ -3,17 +3,14 @@
 
     require './libraries/conn.php';
 
-    if ( !isset($_COOKIE['xyz']) && !isset($_COOKIE['zyx']) ) {
+    if ( !isset($_SESSION['id']) && !isset($_SESSION['email']) ) {
         $_SESSION = [];
         session_unset();
         session_destroy();
-
-        setcookie('xyz', '', time() - 3600);
-        setcookie('zyx', '', time() - 3600);
-
+    
         header("Location: login.php");
         exit;
-    }
+      } 
 
     $id = $_GET['id'];
 

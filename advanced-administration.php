@@ -1,22 +1,19 @@
 <?php
   session_start();
 
-  require './libraries/conn.php';
+  require './libraries/conn.php'; 
 
-  if ( !isset($_COOKIE['xyz']) && !isset($_COOKIE['zyx']) ) {
+  if ( !isset($_SESSION['id']) && !isset($_SESSION['email']) ) {
     $_SESSION = [];
     session_unset();
     session_destroy();
-
-    setcookie('xyz', '', time() - 3600);
-    setcookie('zyx', '', time() - 3600);
 
     header("Location: login.php");
     exit;
   } 
 
   // ambil user berdasarkan id
-  $user_id = $_COOKIE['xyz'];
+  $user_id = $_SESSION['id'];
   $registrasi_table = mysqli_query($conn, "SELECT * FROM registrasi WHERE user_id = '$user_id'");
   $registrasi = mysqli_fetch_assoc($registrasi_table);
   $registrasi_id = $registrasi['id'];

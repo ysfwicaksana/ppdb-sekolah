@@ -1,6 +1,8 @@
 <?php
     require '../libraries/conn.php';
 
+    session_start();
+
     $id = $_GET['id'];
 
     if ( reject($id) > 0 ) {

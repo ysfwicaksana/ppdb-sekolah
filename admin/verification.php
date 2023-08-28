@@ -1,6 +1,8 @@
 <?php
     require '../libraries/conn.php';
 
+    session_start();
+
     // header
     require '../layouts/header-admin.php';
 
