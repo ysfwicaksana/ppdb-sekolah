@@ -3,6 +3,7 @@
 
   session_start();
 
+  // cek session berdasarkan role
   if ( $_SESSION['login'] !== 'admin' ) {
     $_SESSION = [];
     session_unset();
@@ -46,6 +47,6 @@
   </div>
 
 <?php
-    // footer
-    require '../layouts/footer.php';
+  // footer
+  require '../layouts/footer.php';
 ?>

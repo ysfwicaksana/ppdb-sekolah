@@ -3,7 +3,7 @@
 
   require './libraries/conn.php';
 
-  // cek cookie
+  // cek session berdasarkan role
   if ( isset($_SESSION['login']) ) {
     if ( $_SESSION['login'] === 'user' ) {
       header("Location: dashboard.php");

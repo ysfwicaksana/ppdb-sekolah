@@ -3,6 +3,7 @@
 
   require './libraries/conn.php';
 
+  // cek session berdasarkan role
   if ( $_SESSION['login'] !== 'user' ) {
     $_SESSION = [];
     session_unset();

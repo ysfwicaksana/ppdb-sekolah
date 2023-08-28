@@ -3,25 +3,32 @@
     font-family: 'Quicksand', sans-serif !important;
 }
 
+/* tanda . untuk memanggil nama class pada tag html */
+/* tanda # untuk memanggil nama id pada tag html */
 .navbar-expand-lg {
     background-color: rgba(255, 255, 255, .5) !important;
     backdrop-filter: blur(4px) !important;
     box-shadow: 0 .5px 20px -2px rgba(30, 144, 255, .1) !important;
 }
 
+/* tanda , sebagai pemisah pada tag html */
 a,th,td {
     font-size: 15px !important;
     letter-spacing: 1px;
 }
 
+/* tanda > untuk mencari element child pada element parent tertentu  */
+/* :not() sebagai pengecualian */
 tr > td:not(:first-child) {
     min-width: 120px;
 }
 
+/* :first-child untuk mencari element pertama pada element parent tertentu */
 tr > td:first-child {
     min-width: 70px;
 }
 
+/* :nth-child(5) untuk mencari element ke 5 pada element parent tertentu */
 tr > td:nth-child(5) {
     min-width: 50px;
 }

@@ -20,12 +20,12 @@
     function registerAccount($data) {
         global $conn;
 
-        $nama = $data['nama'];
-        $email = $data['email'];
+        $nama = htmlspecialchars($data['nama']);
+        $email = htmlspecialchars($data['email']);
         $password = mysqli_real_escape_string($conn, $data['password']);
         $konfirmasi_password = mysqli_escape_string($conn, $data['konfirmasi-password']);
 
-        // cek konfirmasi password
+        // cek password dan konfirmasi password 
         if ( $password !== $konfirmasi_password ) {
             echo "
                     <script type='text/javascript'>
@@ -88,17 +88,18 @@
     function loginAccount($data) {
         global $conn;
 
-        $email = $data['email'];
-        $password = $data['password'];
+        $email = htmlspecialchars($data['email']);
+        $password = htmlspecialchars($data['password']);
 
         $result = mysqli_query($conn, "SELECT * from user WHERE email = '$email'");
 
         // cek user ada atau tidak
         if ( mysqli_num_rows($result) === 1 ) {
 
-            // cek password
+            // ubah data menjadi array assosiative
             $user = mysqli_fetch_assoc($result);
-
+            
+            // cek password
             if ( password_verify($password, $user['password']) ) {
 
                 // cek role
@@ -111,6 +112,7 @@
 
                     header("Location: dashboard.php");
                     exit;
+
                 } else if ( $user['role'] === 'admin' ) {
                     
                     // set session
@@ -120,6 +122,7 @@
 
                     header("Location: admin/index.php");
                     exit;
+
                 }
             }
         }
@@ -160,6 +163,7 @@
         $user = mysqli_fetch_assoc($result);
         $user_id = $user['id'];
 
+        // query untuk menambahkan data ke table registrasi
         mysqli_query($conn, "INSERT INTO registrasi (id, user_id, jurusan_id, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, status, created_at, updated_at) VALUES(
             '',
             '$user_id',
@@ -172,6 +176,7 @@
             '$created_at',
             '$updated_at'
         )");
+
         return mysqli_affected_rows($conn);
     }
 
@@ -227,6 +232,7 @@
         $new_file_name .= '.';
         $new_file_name .= $image_extension;
 
+        // pindahkan file dokumen ke folder uploads
         move_uploaded_file($tmp_name, 'uploads/' . $new_file_name);
 
         return $new_file_name;
@@ -235,6 +241,7 @@
     // fungsi untuk administrasi lanjutan
     function advancedAdministration($data, $user_id) {
         global $conn;
+
         $registrasi_table = mysqli_query($conn, "SELECT * FROM registrasi WHERE user_id = '$user_id'");
         $registrasi = mysqli_fetch_assoc($registrasi_table);
         $registrasi_id = $registrasi['id'];
@@ -247,6 +254,7 @@
             return false;
         }
 
+        // query untuk menambahkan data table berkas_registrasi
         mysqli_query($conn, "INSERT INTO berkas_registrasi (id, registrasi_id, nama_berkas, file, created_at, updated_at) VALUES(
             '',
             '$registrasi_id',
@@ -278,6 +286,7 @@
         return mysqli_affected_rows($conn);
     }
 
+    // fungsi untuk fitur pencarian 
     function search($keyword) {
         $query = "SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
         LEFT JOIN `user` u ON r.user_id = u.id WHERE
@@ -286,6 +295,7 @@
         return show_data($query);
     }
 
+    // fungsi untuk fitur pencarian akun
     function accountSearch($keyword) {
         $query = "SELECT * FROM user WHERE
         role = 'user' AND
@@ -294,6 +304,7 @@
         return show_data($query);
     }
 
+    // fungsi untuk verifikasi berkas
     function accept($id) {
         global $conn;
 
@@ -302,6 +313,7 @@
         return mysqli_affected_rows($conn);
     }
 
+    // fungsi untuk verifikasi berkas
     function reject($id) {
         global $conn;
 
@@ -310,6 +322,7 @@
         return mysqli_affected_rows($conn);
     }
 
+    // fungsi untuk tambah jurusan baru
     function addMajor($data) {
         global $conn;
 
@@ -327,6 +340,7 @@
         return mysqli_affected_rows($conn);
     }
 
+    // fungsi untuk ubah jurusan
     function updateMajor($data) {
         global $conn;
 
@@ -339,6 +353,7 @@
         mysqli_affected_rows($conn);
     }
 
+    // fungsi untuk hapus jurusan
     function deleteMajor($id) {
         global $conn;
 
@@ -346,6 +361,5 @@
         mysqli_query($conn, "DELETE from jurusan WHERE id = $id");
 
         return mysqli_affected_rows($conn);
-
     }
 ?>

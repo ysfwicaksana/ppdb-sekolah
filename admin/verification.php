@@ -3,6 +3,7 @@
 
     session_start();
 
+    // cek session berdasarkan role
     if ( $_SESSION['login'] !== 'admin' ) {
         $_SESSION = [];
         session_unset();
@@ -11,17 +12,17 @@
         header("Location: ../index.php");
         exit;
     }
-
-    // header
-    require '../layouts/header-admin.php';
-
+    
     $id = $_GET['id'];
-
+    
     $user = show_data("SELECT r.id, u.id, u.nama, r.status FROM registrasi r
     LEFT JOIN `user` u ON r.user_id = u.id WHERE r.id = '$id'")[0];
 
     $files = show_data("SELECT r.id, br.nama_berkas, br.file FROM berkas_registrasi br
     LEFT JOIN registrasi r ON br.registrasi_id = r.id WHERE r.id = '$id'");
+
+    // header
+    require '../layouts/header-admin.php';
 ?>
 
     <div class="verification-contents" style="margin-top: 70px;">

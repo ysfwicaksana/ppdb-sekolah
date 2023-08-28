@@ -3,6 +3,7 @@
 
   session_start();
 
+  // cek session berdasarkan role
   if ( $_SESSION['login'] !== 'admin' ) {
     $_SESSION = [];
     session_unset();
@@ -16,9 +17,9 @@
 
   if ( accept($id) > 0 ) {
     echo "
-        <script type='text/javascript'>
+      <script type='text/javascript'>
           document.addEventListener('DOMContentLoaded', () => {
-            Swal.fire({
+              Swal.fire({
               icon: 'success',
               title: 'success', 
               html: '<p class="."p-popup".">Verifikasi Berhasil!</p>',
@@ -26,10 +27,11 @@
               timer: 2000
             })
           });
-          
-        </script>
+      </script>
     ";
 
     header("Location: ../admin/index.php");
   }
+
+  require '../layouts/footer.php';
 ?>

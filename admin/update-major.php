@@ -3,6 +3,7 @@
 
   session_start();
 
+  // cek session berdasarkan role
   if ( $_SESSION['login'] !== 'admin' ) {
     $_SESSION = [];
     session_unset();
@@ -17,23 +18,23 @@
   $jurusan = show_data("SELECT * FROM jurusan WHERE id = '$id'")[0];
 
   if ( isset($_POST['submit-data']) ) {
-      if ( updateMajor($_POST) > 0  ) {
-          echo "
-          <script type='text/javascript'>
-            document.addEventListener('DOMContentLoaded', () => {
-              Swal.fire({
-                icon: 'success',
-                title: 'success', 
-                html: '<p class="."p-popup".">Jurusan Berhasil Diubah!</p>',
-                showConfirmButton: false,
-                timer: 2000
-              })
+    if ( updateMajor($_POST) > 0  ) {
+        echo "
+        <script type='text/javascript'>
+          document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'success', 
+              html: '<p class="."p-popup".">Jurusan Berhasil Diubah!</p>',
+              showConfirmButton: false,
+              timer: 2000
             })
-          </script>
-        ";
+          })
+        </script>
+      ";
 
-        header("Location: list-major.php");
-      }
+      header("Location: list-major.php");
+    }
   }
 
   // header

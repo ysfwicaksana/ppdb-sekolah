@@ -3,6 +3,7 @@
 
   require './libraries/conn.php';
 
+  // cek session berdasarkan role
   if ( isset($_SESSION['login']) ) {
     if ( $_SESSION['login'] === 'user' ) {
       header("Location: dashboard.php");
@@ -36,6 +37,7 @@
   // header
   include './layouts/header-landing-page.php';
 ?>
+
   <div class="register-contents" style="margin-top: 70px;">
     <div class="container d-flex justify-content-center">
       <form action="" method="post" class="d-flex flex-column mb-3 gap-2 register-form">
