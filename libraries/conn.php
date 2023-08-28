@@ -16,7 +16,7 @@
         return $rows;
     }
 
-    //  fungsi untuk mendaftarkan akun
+    //  fungsi untuk daftar akun
     function registerAccount($data) {
         global $conn;
 
@@ -350,7 +350,7 @@
 
         mysqli_query($conn, "UPDATE jurusan SET nama_jurusan = '$nama_jurusan', updated_at = '$updated_at' WHERE id = '$id'");
 
-        mysqli_affected_rows($conn);
+        return mysqli_affected_rows($conn);
     }
 
     // fungsi untuk hapus jurusan

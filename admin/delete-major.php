@@ -5,10 +5,6 @@
 
     // cek session berdasarkan role
     if ( $_SESSION['login'] !== 'admin' ) {
-        $_SESSION = [];
-        session_unset();
-        session_destroy();
-    
         header("Location: ../index.php");
         exit;
       }
@@ -18,15 +14,15 @@
     if ( deleteMajor($id) > 0 ) {
         echo "
             <script type='text/javascript'>
-            document.addEventListener('DOMContentLoaded', () => {
-                Swal.fire({
-                icon: 'success',
-                title: 'Berhasil', 
-                html: '<p class="."p-popup".">Jurusan berhasil dihapus!</p>',
-                showConfirmButton: false,
-                timer: 2000
+                document.addEventListener('DOMContentLoaded', () => {
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil', 
+                    html: '<p class="."p-popup".">Jurusan berhasil dihapus!</p>',
+                    showConfirmButton: false,
+                    timer: 2000
+                    })
                 })
-            })
             </script>
         ";
 

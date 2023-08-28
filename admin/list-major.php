@@ -5,15 +5,11 @@
 
     // cek session berdasarkan role
     if ( $_SESSION['login'] !== 'admin' ) {
-        $_SESSION = [];
-        session_unset();
-        session_destroy();
-    
         header("Location: ../index.php");
         exit;
     }
 
-    $list_major = show_data("SELECT * FROM jurusan");
+    $list_major = show_data("SELECT * FROM jurusan ORDER BY id DESC");
 
     // header
     require '../layouts/header-admin.php';
@@ -38,10 +34,10 @@
                             <tr>
                                 <th scope="row"><?= $i ?></th>
                                 <td><?= $l['nama_jurusan'] ?></td>
-                                <td><di class="d-flex flex-row mb-3 gap-2">
+                                <td><div class="d-flex flex-row mb-3 gap-2">
                                     <a href="update-major.php?id=<?= $l['id'] ?>" class="btn btn-warning">Ubah</a>
                                     <a href="#" onclick="confirmDeleteMajor(<?= $l['id'] ?>)" class="btn btn-danger">Hapus</a>
-                                </di></td>
+                                </div></td>
                             </tr>
                         <?php $i++ ?>
                         <?php endforeach; ?>
