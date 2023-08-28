@@ -3,6 +3,16 @@
 
   session_start();
 
+  // cek session berdasarkan role
+  if ( $_SESSION['login'] !== 'admin' ) {
+    $_SESSION = [];
+    session_unset();
+    session_destroy();
+
+    header("Location: ../index.php");
+    exit;
+  }
+
   if ( isset($_POST['submit-data']) ) {
       if ( addMajor($_POST) > 0 ) {
           echo "
@@ -37,6 +47,6 @@
   </div>
 
 <?php
-    // footer
-    require '../layouts/footer.php';
+  // footer
+  require '../layouts/footer.php';
 ?>

@@ -3,12 +3,13 @@
 
   require './libraries/conn.php';
 
-  if ( !isset($_SESSION['id']) && !isset($_SESSION['email']) ) {
+  // cek session berdasarkan role
+  if ( $_SESSION['login'] !== 'user' ) {
     $_SESSION = [];
     session_unset();
     session_destroy();
 
-    header("Location: login.php");
+    header("Location: index.php");
     exit;
   } 
 

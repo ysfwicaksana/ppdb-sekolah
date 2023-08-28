@@ -3,9 +3,13 @@
   
   require './libraries/conn.php';
 
+  // cek session berdasarkan role
   if ( isset($_SESSION['login']) ) {
     if ( $_SESSION['login'] === 'user' ) {
       header("Location: dashboard.php");
+      exit;
+    } else if ( $_SESSION['login'] === 'admin' ) {
+      header("Location: admin/index.php");
       exit;
     }
   }

@@ -3,6 +3,16 @@
 
     session_start();
 
+    // cek session berdasarkan role
+    if ( $_SESSION['login'] !== 'admin' ) {
+        $_SESSION = [];
+        session_unset();
+        session_destroy();
+    
+        header("Location: ../index.php");
+        exit;
+    }
+
     $list_major = show_data("SELECT * FROM jurusan");
 
     // header
