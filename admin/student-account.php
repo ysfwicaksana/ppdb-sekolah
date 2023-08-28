@@ -3,6 +3,15 @@
 
   session_start();
 
+  if ( $_SESSION['login'] !== 'admin' ) {
+    $_SESSION = [];
+    session_unset();
+    session_destroy();
+
+    header("Location: ../index.php");
+    exit;
+  }
+
   $students = show_data("SELECT * FROM user WHERE role = 'user' ORDER BY id DESC");
 
   if ( isset($_POST['submit-keyword']) ) {

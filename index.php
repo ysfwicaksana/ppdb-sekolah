@@ -7,6 +7,9 @@
     if ( $_SESSION['login'] === 'user' ) {
       header("Location: dashboard.php");
       exit;
+    } else if ( $_SESSION['login'] === 'admin' ) {
+      header("Location: admin/index.php");
+      exit;
     }
   }
 

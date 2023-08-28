@@ -3,6 +3,15 @@
 
   session_start();
 
+  if ( $_SESSION['login'] !== 'admin' ) {
+    $_SESSION = [];
+    session_unset();
+    session_destroy();
+
+    header("Location: ../index.php");
+    exit;
+  }
+
   $id = $_GET['id'];
 
   $jurusan = show_data("SELECT * FROM jurusan WHERE id = '$id'")[0];

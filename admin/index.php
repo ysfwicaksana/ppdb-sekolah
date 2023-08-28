@@ -3,6 +3,15 @@
   
   session_start();
 
+  if ( $_SESSION['login'] !== 'admin' ) {
+    $_SESSION = [];
+    session_unset();
+    session_destroy();
+
+    header("Location: ../index.php");
+    exit;
+  } 
+
   $students = show_data("SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
   LEFT JOIN `user` u ON r.user_id = u.id ORDER BY r.id DESC");
 

@@ -118,7 +118,7 @@
                     $_SESSION['email'] = $user['email'];
                     $_SESSION['login'] = $user['role'];
 
-                    header("Location: index.php");
+                    header("Location: admin/index.php");
                     exit;
                 }
             }
