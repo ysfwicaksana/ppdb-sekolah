@@ -15,24 +15,8 @@
     
     <!-- link css -->
     <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   </head>
   <body>
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="dashboard.php">Hasil Seleksi</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="administration.php">Kelengkapan Administrasi</a>
-            </li>
-            </ul>
-            <div class="d-flex">
-              <a href="logout.php" class="btn btn-danger btn-logout">Keluar</a>
-            </div>
-        </div>
-      </div>
-    </nav>
+    

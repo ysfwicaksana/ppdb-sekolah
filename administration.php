@@ -31,7 +31,8 @@
   }
   
   // header
-  require './layouts/header.php';
+  include './layouts/header.php';
+  include './layouts/sidebar.php';
 ?>
 
   <div class="administration-contents" style="margin-top: 70px;">

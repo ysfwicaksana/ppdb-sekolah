@@ -22,7 +22,7 @@
               document.addEventListener('DOMContentLoaded', () => {
                 Swal.fire({
                   icon: 'success',
-                  title: 'Berhasil', 
+                  title: 'Berhasil',
                   html: '<p class="."p-popup".">Email atau password salah!</p>',
                   showConfirmButton: false,
                   timer: 2000
@@ -34,11 +34,13 @@
   }
 
   // header
-  include './layouts/header-landing-page.php';
+  include './layouts/header.php';
+  include './layouts/sidebar.php';
 ?>
   <div class="login-contents" style="margin-top: 70px;">
     <div class="container d-flex justify-content-center">
       <form action="" method="post" class="d-flex flex-column mb-3 gap-2 login-form">
+          <h4>Masuk</h4>
           <input type="text" class="form-control" placeholder="Email" name="email" required>
           <input type="password" class="form-control" placeholder="Password" name="password" required>
           <button type="submit" name="submit" class="btn btn-primary">Masuk</button>
