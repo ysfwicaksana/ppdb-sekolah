@@ -295,15 +295,6 @@
         return show_data($query);
     }
 
-    // fungsi untuk fitur pencarian akun
-    function accountSearch($keyword) {
-        $query = "SELECT * FROM user WHERE
-        role = 'user' AND
-        (nama LIKE '%$keyword%' OR email LIKE '%$keyword%') ORDER BY id DESC";
-
-        return show_data($query);
-    }
-
     // fungsi untuk verifikasi berkas
     function accept($id) {
         global $conn;
