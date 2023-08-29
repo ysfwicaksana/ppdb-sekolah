@@ -22,7 +22,10 @@
   }
 
   // header 
-  require './layouts/header.php';
+  include './layouts/header.php';
+  include './layouts/sidebar.php';
+  
+
 ?>
   <div class="dashboard-contents" style="margin-top: 70px;">
     <div class="container d-flex flex-column mb-3">

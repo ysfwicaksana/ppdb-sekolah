@@ -21,7 +21,7 @@
             document.addEventListener('DOMContentLoaded', () => {
                 Swal.fire({
                 icon: 'success',
-                title: 'Berhasil', 
+                title: 'Berhasil',
                 html: '<p class="."p-popup".">Jurusan berhasil dihapus!</p>',
                 showConfirmButton: false,
                 timer: 2000

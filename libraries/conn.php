@@ -25,27 +25,29 @@
         $password = mysqli_real_escape_string($conn, $data['password']);
         $konfirmasi_password = mysqli_escape_string($conn, $data['konfirmasi-password']);
 
-        // cek password dan konfirmasi password 
+        // cek password dan konfirmasi password
         if ( $password !== $konfirmasi_password ) {
             echo "
-                    <script type='text/javascript'>
-                        document.addEventListener('DOMContentLoaded', () => {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal', 
-                                html: '<p class="."p-popup".">Konfirmasi password tidak sesuai!</p>',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
+                <script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            html: '<p class="."p-popup".">Konfirmasi password tidak sesuai!</p>',
+                            showConfirmButton: false,
+                            timer: 2000
                         })
-                    </script>
-                ";
+                    })
+                </script>
+            ";
 
             return false;
         }
 
         // cek email sudah ada atau belum
         $result = mysqli_query($conn, "SELECT email FROM user WHERE email = '$email'");
+        // print_r($result);
+        // die;
 
         if (mysqli_fetch_assoc($result)) {
             echo "
@@ -71,8 +73,7 @@
         $updated_at = $created_at;
 
         // query untuk menambahkan user baru ke database
-        mysqli_query($conn, "INSERT INTO user (id, email, nama, password, role, created_at, updated_at) VALUES(
-            '',
+        mysqli_query($conn, "INSERT INTO user (email, nama, password, role, created_at, updated_at) VALUES(
             '$email',
             '$nama',
             '$password',
@@ -164,8 +165,7 @@
         $user_id = $user['id'];
 
         // query untuk menambahkan data ke table registrasi
-        mysqli_query($conn, "INSERT INTO registrasi (id, user_id, jurusan_id, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, status, created_at, updated_at) VALUES(
-            '',
+        mysqli_query($conn, "INSERT INTO registrasi (user_id, jurusan_id, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, status, created_at, updated_at) VALUES(
             '$user_id',
             '$jurusan_id',
             '$jenis_kelamin',
@@ -255,8 +255,7 @@
         }
 
         // query untuk menambahkan data table berkas_registrasi
-        mysqli_query($conn, "INSERT INTO berkas_registrasi (id, registrasi_id, nama_berkas, file, created_at, updated_at) VALUES(
-            '',
+        mysqli_query($conn, "INSERT INTO berkas_registrasi (registrasi_id, nama_berkas, file, created_at, updated_at) VALUES(
             '$registrasi_id',
             '$nama_berkas',
             '$file',
@@ -286,7 +285,7 @@
         return mysqli_affected_rows($conn);
     }
 
-    // fungsi untuk fitur pencarian 
+    // fungsi untuk fitur pencarian
     function search($keyword) {
         $query = "SELECT r.id, u.nama, r.tempat_lahir, r.tanggal_lahir, r.jenis_kelamin, r.status FROM registrasi r
         LEFT JOIN `user` u ON r.user_id = u.id WHERE
@@ -330,8 +329,7 @@
         $created_at = date('Y-m-d H:i:s', time());
         $updated_at = $created_at;
 
-        mysqli_query($conn, "INSERT INTO jurusan (id, nama_jurusan, created_at, updated_at) VALUES(
-            '',
+        mysqli_query($conn, "INSERT INTO jurusan (nama_jurusan, created_at, updated_at) VALUES(
             '$nama_jurusan',
             '$created_at',
             '$updated_at'
@@ -348,7 +346,8 @@
         $nama_jurusan = $data['nama_jurusan'];
         $updated_at = date('Y-m-d H:i:s', time());
 
-        mysqli_query($conn, "UPDATE jurusan SET nama_jurusan = '$nama_jurusan', updated_at = '$updated_at' WHERE id = '$id'");
+        mysqli_query($conn, "UPDATE jurusan SET nama_jurusan = '$nama_jurusan',
+                                                updated_at = '$updated_at' WHERE id = '$id'");
 
         mysqli_affected_rows($conn);
     }
@@ -356,10 +355,11 @@
     // fungsi untuk hapus jurusan
     function deleteMajor($id) {
         global $conn;
-
+        
         // query untuk menghapus jurusan berdasarkan id
-        mysqli_query($conn, "DELETE from jurusan WHERE id = $id");
+        mysqli_query($conn, "DELETE from jurusan WHERE id = {$id}");
 
         return mysqli_affected_rows($conn);
+        
     }
 ?>

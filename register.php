@@ -1,7 +1,7 @@
 <?php 
   session_start();
 
-  require './libraries/conn.php';
+  require_once './libraries/conn.php';
 
   // cek session berdasarkan role
   if ( isset($_SESSION['login']) ) {
@@ -15,6 +15,7 @@
   }
 
   if ( isset($_POST['submit']) ) {
+
     if ( registerAccount($_POST) > 0 ) {
       echo "
             <script type='text/javascript'>
@@ -30,28 +31,31 @@
             </script>
           ";
       
-      header("Location: login.php");
+      header("Location: dashboard.php");
     }
   }
 
   // header
-  include './layouts/header-landing-page.php';
+  include './layouts/header.php';
+  include './layouts/sidebar.php';
 ?>
 
   <div class="register-contents" style="margin-top: 70px;">
     <div class="container d-flex justify-content-center">
       <form action="" method="post" class="d-flex flex-column mb-3 gap-2 register-form">
-        <input type="text" class="form-control" placeholder="Nama" name="nama" required>
-        <input type="text" class="form-control" placeholder="Email" name="email" required>
-        <input type="password" class="form-control" placeholder="Password" name="password" required>
-        <input type="password" class="form-control" placeholder="Konfirmasi Password" name="konfirmasi-password" required>
+        <h4>Registrasi</h4>
+        <input type="text" class="form-control" placeholder="Nama" name="nama" required/>
+        <input type="text" class="form-control" placeholder="Email" name="email" required/>
+        <input type="password" class="form-control" placeholder="Password" name="password" required />
+        <input type="password" class="form-control" placeholder="Konfirmasi Password"
+              name="konfirmasi-password" required />
         <button type="submit" name="submit" class="btn btn-primary">Daftar</button>
         <p>Sudah mempunyai akun? <a href="login.php" style="text-decoration: none;">Masuk</a></p>
       </form>
-    </div>    
+    </div>
   </div>
     
 <?php
   // footer
-  require './layouts/footer.php';
+  include './layouts/footer.php';
 ?>

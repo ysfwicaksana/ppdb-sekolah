@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  require './libraries/conn.php'; 
+  require './libraries/conn.php';
 
   // cek session berdasarkan role
   if ( $_SESSION['login'] !== 'user' ) {
@@ -46,7 +46,8 @@
   LEFT JOIN user u ON r.user_id = u.id WHERE u.id = '$user_id'");
 
   // header
-  require './layouts/header.php';
+  include './layouts/header.php';
+  include './layouts/sidebar.php';
 ?>  
   <div class="advanced-administration-contents" style="margin-top: 70px;">
     <div class="container d-flex flex-column mb-3">
